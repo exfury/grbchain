@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  grbchaindnode0:
+    container_name: grbchaindnode0
+    image: "grbchain/node"
+    ports:
+      - "26656-26657:26656-26657"
+    environment:
+      - ID=0
+      - LOG=${LOG:-grbchaind.log}
+    volumes:
+      - ./build:/grbchaind:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.2
+
+  grbchaindnode1:
+    container_name: grbchaindnode1
+    image: "grbchain/node"
+    ports:
+      - "26659-26660:26656-26657"
+    environment:
+      - ID=1
+      - LOG=${LOG:-grbchaind.log}
+    volumes:
+      - ./build:/grbchaind:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.3
+
+  grbchaindnode2:
+    container_name: grbchaindnode2
+    image: "grbchain/node"
+    environment:
+      - ID=2
+      - LOG=${LOG:-grbchaind.log}
+    ports:
+      - "26661-26662:26656-26657"
+    volumes:
+      - ./build:/grbchaind:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.4
+
+  grbchaindnode3:
+    container_name: grbchaindnode3
+    image: "grbchain/node"
+    environment:
+      - ID=3
+      - LOG=${LOG:-grbchaind.log}
+    ports:
+      - "26663-26664:26656-26657"
+    volumes:
+      - ./build:/grbchaind:Z
+    networks:
+      localnet:
+        ipv4_address: 192.168.10.5
+
+networks:
+  localnet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 192.168.10.0/16
+
